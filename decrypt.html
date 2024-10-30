@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descriptografia de Mensagem</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.10.0/forge.all.min.js"></script>
+</head>
+<body>
+    <h1>Descriptografia de Mensagem</h1>
+    <textarea id="encryptedMessage" placeholder="Cole a mensagem criptografada"></textarea>
+    <textarea id="privateKey" placeholder="Cole a chave privada"></textarea>
+    <button onclick="decryptMessage()">Descriptografar</button>
+    <h3>Mensagem Original:</h3>
+    <textarea id="decryptedMessage" readonly></textarea>
+
+    <script>
+        function decryptMessage() {
+            // Obter o texto criptografado e a chave privada
+            const encryptedMessage = forge.util.decode64(document.getElementById("encryptedMessage").value);
+            const privateKeyPem = document.getElementById("privateKey").value;
+
+            // Importar a chave privada
+            const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+
+            // Descriptografar a mensagem
+            const decrypted = privateKey.decrypt(encryptedMessage, 'RSA-OAEP');
+
+            // Exibir a mensagem original
+            document.getElementById("decryptedMessage").value = decrypted;
+        }
+    </script>
+</body>
+</html>
