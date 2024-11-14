@@ -1,107 +1,86 @@
-Projeto de Autenticação 2FA com PostgreSQL e Dotenv
-Este projeto é uma aplicação de autenticação em duas etapas (2FA) construída com Node.js, Express, e PostgreSQL, com variáveis de ambiente protegidas pelo dotenv. Ele inclui autenticação segura com senhas criptografadas e um processo de atualização automatizada de dependências e auditoria de segurança.
 
-Índice
-Pré-requisitos
-Instalação
-Configuração
-Scripts Disponíveis
-Configuração de Segurança
-Arquitetura do Projeto
-Pré-requisitos
-Node.js versão 14 ou superior
-PostgreSQL versão 10 ou superior
-NPM ou Yarn
-Instalação
-Clone este repositório:
+# Projeto de Autenticação com Envio de Email
 
-bash
-Copiar código
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
-cd nome-do-repositorio
-Instale as dependências do projeto:
+Este é um projeto simples de autenticação em Node.js, que solicita ao usuário seu **email**, valida o input e envia um **email de confirmação** para o endereço inserido. Utiliza o **Nodemailer** para o envio de emails.
 
-bash
-Copiar código
+## Funcionalidades
+
+- Exibe uma página de login solicitando o **email** do usuário.
+- Após o envio do **email**, o servidor envia um **email de confirmação** para o endereço inserido.
+- O **email de confirmação** contém uma mensagem simples informando ao usuário sobre o login.
+
+## Tecnologias Usadas
+
+- **Node.js** - Ambiente de execução JavaScript no servidor.
+- **Express** - Framework web para Node.js.
+- **Nodemailer** - Biblioteca para envio de emails.
+- **Dotenv** - Gerenciamento de variáveis de ambiente (como as credenciais de email).
+
+## Como Rodar o Projeto
+
+### Passo 1: Clonar o Repositório
+
+Clone este repositório para o seu computador:
+
+```bash
+git clone https://github.com/usuario/projeto-autenticacao.git
+cd projeto-autenticacao
+```
+
+### Passo 2: Instalar Dependências
+
+Instale as dependências do projeto com o comando:
+
+```bash
 npm install
-Instale o horusec-cli globalmente para auditoria de segurança:
+```
 
-bash
-Copiar código
-npm install -g horusec-cli
-Configuração
-Crie um arquivo .env na raiz do projeto e configure suas variáveis de ambiente como abaixo:
+### Passo 3: Configurar Variáveis de Ambiente
 
-plaintext
-Copiar código
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=nome_do_banco
-JWT_SECRET=sua_chave_secreta
-EMAIL_USER=seu_email
-EMAIL_PASS=sua_senha_do_email
-Crie o banco de dados no PostgreSQL:
+Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis:
 
-bash
-Copiar código
-createdb nome_do_banco
-Execute o projeto:
+```env
+EMAIL=seuemail@gmail.com
+PASSWORD=suaSenhaDeApp
+```
 
-bash
-Copiar código
+> **Importante**: Para o envio de email com Gmail, é recomendado utilizar um **Token de App** em vez da senha normal da sua conta.
+
+### Passo 4: Rodar o Servidor
+
+Inicie o servidor com o comando:
+
+```bash
 npm start
-O servidor deve iniciar em http://localhost:3000.
+```
 
-Scripts Disponíveis
-npm start: Inicia o servidor Express.
-npm audit: Verifica vulnerabilidades de segurança nas dependências.
-npm outdated: Verifica dependências desatualizadas.
-npm audit fix: Corrige vulnerabilidades de segurança.
-horusec start: Executa análise de segurança do código usando Horusec CLI.
-Configuração de Segurança
-Dotenv: As credenciais e chaves secretas são armazenadas em um arquivo .env que deve ser mantido fora do repositório público.
-Dependabot: Foi configurado para verificar atualizações de segurança em dependências semanalmente.
-Horusec: Uma ferramenta de análise de segurança para identificar possíveis vulnerabilidades no código.
-Arquitetura do Projeto
-bash
-Copiar código
-2FA-Authentication
-│
+O servidor ficará disponível em `http://localhost:3000/`.
+
+### Passo 5: Acessar o Formulário de Login
+
+Abra o navegador e acesse `http://localhost:3000/` para preencher o **email**. Após o envio do formulário, um email de confirmação será enviado ao endereço informado.
+
+## Estrutura de Pastas
+
+```
+.
 ├── server
 │   ├── controllers
-│   │   └── authController.js        # Controlador de autenticação
-│   ├── models
-│   │   └── userModel.js             # Modelo de usuário com integração ao PostgreSQL
+│   │   └── authController.js  # Lógica de autenticação e envio de emails
 │   ├── routes
-│   │   └── authRoutes.js            # Rotas de autenticação
-│   ├── utils
-│   │   └── emailService.js          # Serviço para envio de emails
-│   ├── config
-│   │   └── db.js                    # Conexão com o PostgreSQL usando Pool
-│   ├── .env                         # Configuração de variáveis de ambiente (não incluído no repositório)
-│   ├── server.js                    # Configuração principal do servidor Express
-│   └── package.json                 # Configuração de dependências e scripts
-│
-└── client
-    ├── index.html                   # Página inicial
-    ├── login.html                   # Página de login
-    ├── verify.html                  # Página de verificação 2FA
-    ├── success.html                 # Página de sucesso de autenticação
-    └── error.html                   # Página de erro
-Contribuição
-Se você deseja contribuir, por favor, faça um fork do repositório e abra um pull request com as suas alterações.
+│   │   └── authRoutes.js      # Definição das rotas
+│   ├── server.js              # Arquivo principal do servidor
+├── public
+│   ├── login.html             # Página de login (entrada do email)
+├── .env                       # Variáveis de ambiente para credenciais de email
+├── package.json               # Dependências e scripts do projeto
+└── README.md                  # Este arquivo
+```
 
-Com essas instruções no README, o projeto estará bem documentado e preparado para usuários e desenvolvedores utilizarem, entenderem a arquitetura e contribuírem adequadamente.
+## Licença
 
+Este projeto está licenciado sob a **MIT License**.
 
+---
 
-
-
-
-
-
-
-
-ChatGPT pode cometer erros. C
+Esse **README** fornece uma explicação concisa do projeto, como rodá-lo, configurar as variáveis de ambiente e o que esperar do funcionamento.
